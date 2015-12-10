@@ -2,3 +2,12 @@ sudo: false
 language: node_js
 node_js:
   - '4'
+addons:
+  apt:
+    packages:
+    # bash.origin.phantomjs
+    - libicu52
+    - libjpeg8
+    - libfontconfig1
+    - libwebp5
+    - libssl1.0.0
