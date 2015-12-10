@@ -6,7 +6,7 @@
     "bash.origin.phantomjs": "./bash.origin.phantomjs"
   },
   "scripts": {
-    "test": "sh ./test.sh"
+    "test": "./test.sh"
   },
   "dependencies": {
     "bash.origin": "^0.1.30"
