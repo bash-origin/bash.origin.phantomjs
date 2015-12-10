@@ -16,10 +16,27 @@ function init {
 
 		if [ "$VERSION" != "2.0.0" ]; then
 			echo "ERROR: Got version '$VERSION' while we were looking for '2.0.0'"
+
+			if [ ! -z "$CIRCLE_TEST_REPORTS" ]; then
+				echo '<testsuite tests="1">
+    <testcase classname="Test" name="TestVersion">
+        <failure message="Got version $VERSION while we were looking for 2.0.0"></failure>
+    </testcase>
+</testsuite>' > "$CIRCLE_TEST_REPORTS/bash.xml"
+			fi
+
 			exit 1;
 		fi
 
 		echo "OK"
+		
+		if [ ! -z "$CIRCLE_TEST_REPORTS" ]; then
+			echo '<testsuite tests="1">
+    <testcase classname="Test" name="TestVersion">
+    </testcase>
+</testsuite>' > "$CIRCLE_TEST_REPORTS/bash.xml"
+		fi
+
 	}
 
 	Test $@
