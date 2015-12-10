@@ -1,13 +1,7 @@
-sudo: false
+sudo: required
 language: node_js
 node_js:
   - '4'
-addons:
-  apt:
-    packages:
+before_install:
     # bash.origin.phantomjs
-    - libicu52
-    - libjpeg8
-    - libfontconfig1
-    - libwebp5
-    - libssl1.0.0
+    - sudo apt-get install libicu52 libjpeg8 libfontconfig1 libwebp5 libssl1.0.0
