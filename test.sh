@@ -1,6 +1,6 @@
 #!/bin/bash -e
 # Source https://github.com/cadorn/bash.origin
-"node_modules/bash.origin/bash.origin" BO install -v
+"node_modules/bash.origin/bash.origin" BO install
 . "$HOME/.bash.origin"
 function init {
 	eval BO_SELF_BASH_SOURCE="$BO_READ_SELF_BASH_SOURCE"
