@@ -8,27 +8,39 @@ function init {
 
 
     function ensureInstalled {
-        if ! BO_if_os darwin ; then
+        if BO_if_os darwin ; then
             # OSX
 
-            BO_ensureInSystemCache DOWNLOADED_PATH \
+            BO_systemCachePath DOWNLOADED_PATH \
                 "bitbucket.org/ariya/phantomjs/downloads/phantomjs" \
-                "2.0.0" \
-                "https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.0.0-macosx.zip"
+                "2.0.0"
 
-            # @see https://github.com/ariya/phantomjs/issues/12900#issuecomment-85198514
-            brew install upx || true
-            upx -d $DOWNLOADED_PATH/bin/phantomjs || true
+            if [ ! -e "$DOWNLOADED_PATH" ]; then
+                BO_ensureInSystemCache DOWNLOADED_PATH \
+                    "bitbucket.org/ariya/phantomjs/downloads/phantomjs" \
+                    "2.0.0" \
+                    "https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.0.0-macosx.zip"
+    
+                # @see https://github.com/ariya/phantomjs/issues/12900#issuecomment-85198514
+                brew install upx || true
+                upx -d $DOWNLOADED_PATH/bin/phantomjs || true
+            fi
 
             # TODO: Now we check to make sure it runs
 
             BO_setResult "$1" "$DOWNLOADED_PATH"
         else
             # Linux
-            
-            # TODO: Download pre-built binary: https://github.com/zeevl/phantomjs2
-            #       https://github.com/bprodoehl/phantomjs/releases/
+            # @see Download pre-built binary: https://github.com/zeevl/phantomjs2
+            # @see https://github.com/bprodoehl/phantomjs/releases/
 
+            BO_ensureInSystemCache DOWNLOADED_PATH \
+                "github.com/bprodoehl/phantomjs" \
+                "2.0.0-20150528" \
+                "https://github.com/bprodoehl/phantomjs/releases/download/v2.0.0-20150528/phantomjs-2.0.0-20150528-u1504-x86_64.zip"
+
+# Optionally build from source
+# @see http://phantomjs.org/build.html
 #            BO_ensureInSystemCache DOWNLOADED_PATH \
 #                "bitbucket.org/ariya/phantomjs/downloads/phantomjs" \
 #                "2.0.0-source" \
@@ -44,9 +56,7 @@ function init {
 
     function run {
         ensureInstalled BASE_PATH
-
-echo "run bash.origin.phantomjs: $BASE_PATH $@"
-
+        "$BASE_PATH/bin/phantomjs" $@       
     }
 
 }
