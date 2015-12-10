@@ -56,7 +56,8 @@ function init {
 
     function run {
         ensureInstalled BASE_PATH
-        "$BASE_PATH/bin/phantomjs" $@       
+        BO_log "$VERBOSE" "Run command: $BASE_PATH/bin/phantomjs $@"
+        "$BASE_PATH/bin/phantomjs" $@
     }
 
 }
